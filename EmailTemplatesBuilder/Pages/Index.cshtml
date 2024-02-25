@@ -1,0 +1,83 @@
+﻿@page
+@using EmailTemplatesBuilder.Models
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<form method="post" asp-page-handler="CreateNewItem">
+    <div asp-validation-summary="All">
+        <span>Please correct the following errors</span>
+    </div>
+    <label asp-for="@Model.Item.Name"></label>
+    <input asp-for="@Model.Item.Name" class="form-control" />
+    <br />
+    <label asp-for="@Model.Item.ContentDescriptorId"></label>
+    <select asp-for="@Model.Item.ContentDescriptorId" asp-items="@Model.Descriptors" class="form-control">
+        <option value="">Pick one</option>
+    </select>
+    <br />
+    <label asp-for="@Model.Item.Text"></label>
+    <textarea asp-for="@Model.Item.Text" ></textarea>
+    <br />
+    <label asp-for="@Model.Item.CreatedBy"></label>
+    <input asp-for="@Model.Item.CreatedBy" class="form-control" />
+
+    <br/>
+    <input type="submit" value="Create New Item" class="btn btn-sm btn-primary" />
+</form>
+
+<br />
+
+<form method="post" asp-page-handler="CreateNewDescriptor">
+    <div asp-validation-summary="All">
+        <span>Please correct the following errors</span>
+    </div>
+    <label asp-for="@Model.NewDescriptor.Description"></label>
+    <input asp-for="@Model.NewDescriptor.Description" class="form-control" />
+    <br />
+    
+    <input type="submit" value="Create New Descriptor" class="btn btn-sm btn-primary" />
+</form>
+
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Content Type</th>
+            <th>Name</th>
+            <th>Text</th>
+            <th>Raw Text</th>
+            <th>CreatedBy</th>
+            <th>CreatedDate</th>
+            <th>UpdatedBy</th>
+            <th>UpdatedDate</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.ContentDescriptor.Description</td>
+                <td>@item.Name</td>
+                <td>@Html.Raw(item.Text)</td>
+                <td>@item.Text</td>
+                <td>@item.CreatedBy</td>
+                <td>@item.CreatedAt</td>
+                <td>@item.UpdatedBy</td>
+                <td>@item.UpdatedAt</td>
+                <td>
+                    <a asp-page="/EditItem" asp-route-item_id="@item.Id">Edit</a> |
+                    <a asp-page-handler="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+</table>

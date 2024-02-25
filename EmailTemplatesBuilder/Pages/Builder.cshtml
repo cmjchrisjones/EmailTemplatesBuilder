@@ -1,0 +1,78 @@
+﻿@page
+@model EmailTemplatesBuilder.Pages.BuilderModel
+@{
+}
+
+<h3>Select from the following options</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered table-sm table-striped">
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        @{
+                            var itemIdForCheckbox = $"item-{item.Id}";
+                        }
+                        <td><input type="checkbox" name="@itemIdForCheckbox" class="selector" /></td>
+                        <td>
+                            @item.Name (@item.ContentDescriptor.Description)
+                        </td>
+                        <td>
+                            <span class="content">@Html.Raw(@item.Text)</span>
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+        <div class="col-md-6">
+            <form method="post" asp-page-handler="SendEmail">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Selected Items (Preview)</h4>
+                    </div>
+                    <div class="card-body">
+                        <textarea asp-for="@Model.Content"></textarea>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Send email</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+
+    var selectors = document.getElementsByClassName("selector");
+    Array.from(selectors, s => s.addEventListener('click', function (e) {
+        if (s.checked) {
+
+            // find the nearest content class and copy the contents
+            var content = s.closest('tr').getElementsByClassName('content')[0].innerHTML;
+
+            // create a span with an id and append the content to it
+            var span = document.createElement('span');
+            span.innerHTML = content;
+            span.id = `selected-${s.name}`;
+            document.getElementsByClassName('card-body')[0].appendChild(span);
+            document.getElementById('Content').innerHTML = span;
+            document.getElementById("Content").value += targ.textContent || targ.innerText;
+
+
+        }
+        else {
+            // remove the content from the card body
+            var span = document.getElementById(`selected-${s.name}`);
+            span.remove();
+        }
+
+    }))
+
+
+</script>
