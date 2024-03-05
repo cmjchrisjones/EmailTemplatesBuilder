@@ -1,0 +1,21 @@
+{
+    "name": "Email Template builder",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "mssql",
+    "workspaceFolder": "/workspace",
+    "shutdownAction": "stopCompose",
+    "runArgs": [
+        "-v",
+        "/var/run/docker.sock:/var/run/docker.sock"
+    ],
+    "extensions": [
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "ms-dotnettools.vscode-dotnet-runtime",
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit",
+        "ms-azuretools.vscode-docker",
+        "ms-dotnettools.vscodeintellicode-csharp"
+    ],
+    "image": "mcr.microsoft.com/devcontainers/universal:2"
+}
