@@ -13,6 +13,10 @@ namespace EmailTemplatesBuilder.Pages
         [BindProperty]
         public string? Content { get; set; }
 
+
+        [BindProperty]
+        public string? Subject { get; set; }
+
         public BuilderModel(IItemRepository itemRepository, IEmailSender emailSender)
         {
             _itemRepository = itemRepository;
@@ -30,18 +34,20 @@ namespace EmailTemplatesBuilder.Pages
 
         public async Task<IActionResult> OnPostSendEmailAsync()
         {
-            //_emailSender.SendEmail(new Message(new List<string> { "test@test.com" }, "Testing 123", Content));
+           // _emailSender.SendEmail(new Message(new List<string> { "test@test.com" }, "Testing 123", Content));
 
             var message = new Message
             {
                 To = new List<MimeKit.MailboxAddress> { new MimeKit.MailboxAddress("test", "codemazetest@mailinator.com") },
-                Subject = "Test email",
-                Content = "This is the content from our email."
+                Subject = Subject,
+                Content = Content
             };
+
+
             _emailSender.SendEmail(message);
 
 
-            return Page();
+            return RedirectToAction("Builder");
         }
     }
 }

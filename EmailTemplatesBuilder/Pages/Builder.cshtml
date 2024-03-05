@@ -27,16 +27,18 @@
 
         </div>
         <div class="col-md-6">
-            <form method="post" asp-page-handler="SendEmail">
+            <form method="post" asp-page-handler="SendEmail" id="form">
                 <div class="card">
                     <div class="card-header">
                         <h4>Selected Items (Preview)</h4>
                     </div>
-                    <div class="card-body">
-                        <textarea asp-for="@Model.Content"></textarea>
+                    <div class="card-body" id="card-body">
+                        @* <textarea asp-for="@Model.Content" class="mceNonEditable"></textarea> *@
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Send email</button>
+                        <input type="text" asp-for="@Model.Subject" placeholder="Email Subject" />
+                        <input type="text" asp-for="@Model.Content" />
+                        <button type="submit" id="submitBtn" class="btn btn-primary">Send email</button>
                     </div>
                 </div>
             </form>
@@ -44,10 +46,15 @@
     </div>
 </div>
 
-
-
-
 <script>
+    document.getElementById("submitBtn").addEventListener('click', function (e) {
+        e.preventDefault();
+        var content = document.getElementById("card-body").innerHTML.trim();
+        console.log(content);
+        document.getElementById("Content").value = content;
+        document.getElementById("form").submit();
+    });
+
 
     var selectors = document.getElementsByClassName("selector");
     Array.from(selectors, s => s.addEventListener('click', function (e) {
@@ -61,8 +68,10 @@
             span.innerHTML = content;
             span.id = `selected-${s.name}`;
             document.getElementsByClassName('card-body')[0].appendChild(span);
-            document.getElementById('Content').innerHTML = span;
-            document.getElementById("Content").value += targ.textContent || targ.innerText;
+            // document.getElementById("Content").innerHTML += span.innerHTML;
+            // tinyMCE.activeEditor.setContent(span, { format: 'raw' });
+            // tinymce.activeEditor.execCommand('mceInsertContent', false, span);
+
 
 
         }

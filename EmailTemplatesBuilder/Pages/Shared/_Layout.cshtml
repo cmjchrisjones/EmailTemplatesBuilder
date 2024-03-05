@@ -10,11 +10,12 @@
     <script src="~/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
-            selector: '#Item_Text',
+            // selector: '#Item_Text',
             plugins: 'lists',
             toolbar: 'numlist bullist',
             skin: 'oxide-dark',
-            promotion: false
+            promotion: false,
+            selector: 'textarea'
 
         });
     </script>

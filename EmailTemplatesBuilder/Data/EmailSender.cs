@@ -45,9 +45,12 @@ namespace EmailTemplatesBuilder.Data
             {
                 try
                 {
-                    client.Connect(_emailConfig.SmtpServer, _emailConfig.Port, true);
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    client.Authenticate(_emailConfig.UserName, _emailConfig.Password);
+                    // mailhog
+                    // client.Connect("127.0.0.1", 1025, false);
+
+                    client.Connect(_emailConfig.SmtpServer, _emailConfig.Port, false);
+                    //client.AuthenticationMechanisms.Remove("XOAUTH2");
+                    //client.Authenticate(_emailConfig.UserName, _emailConfig.Password);
 
                     client.Send(mailMessage);
                 }
