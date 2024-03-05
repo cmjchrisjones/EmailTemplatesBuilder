@@ -8,14 +8,20 @@
         "-v",
         "/var/run/docker.sock:/var/run/docker.sock"
     ],
-    "extensions": [
-        "GitHub.copilot",
-        "GitHub.copilot-chat",
-        "ms-dotnettools.vscode-dotnet-runtime",
-        "ms-dotnettools.csharp",
-        "ms-dotnettools.csdevkit",
-        "ms-azuretools.vscode-docker",
-        "ms-dotnettools.vscodeintellicode-csharp"
-    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-azuretools.vscode-docker",
+                "ms-dotnettools.csharp",
+                "GitHub.copilot",
+                "GitHub.copilot-chat",
+                "ms-dotnettools.vscode-dotnet-runtime",
+                "ms-dotnettools.csharp",
+                "ms-dotnettools.csdevkit",
+                "ms-azuretools.vscode-docker",
+                "ms-dotnettools.vscodeintellicode-csharp"
+            ]
+        }
+    },
     "image": "mcr.microsoft.com/devcontainers/universal:2"
 }
